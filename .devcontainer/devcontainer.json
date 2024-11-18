@@ -1,0 +1,32 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/alpine
+{
+	"name": "Advent of Code",
+	"image": "adventofcode",
+	"mounts" : [
+		{
+			"source" : "${localEnv:USERPROFILE}/.ssh",
+			"target" : "/root/.ssh",
+			"type" : "bind"
+		},
+		{
+			"source" : "${localEnv:USERPROFILE}/.gitconfig",
+			"target" : "/root/.gitconfig",
+			"type" : "bind"
+		},
+		{
+			"source" : "${localEnv:USERPROFILE}/.vim",
+			"target" : "/root/.vim",
+			"type" : "bind"
+		}
+	],
+	"workspaceMount" : "source=adventofcode,target=/work/,type=volume",
+	"workspaceFolder": "/work/",
+    "customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.vscode-pylance"
+			]
+		}
+	}
+}
