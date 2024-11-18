@@ -19,3 +19,6 @@ RUN wget -c https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.s
     /root/miniconda3/condabin/conda init bash && \
     /root/miniconda3/condabin/conda env create -y -f environment.yml && \
     /root/miniconda3/condabin/conda clean --all -y
+
+# Setup Advent of Code Session Token
+COPY AOC_SESSION /root/.config/aocd/token

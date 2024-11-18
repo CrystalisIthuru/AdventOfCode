@@ -1,3 +1,5 @@
 name: adventofcode
 dependencies:
   - numpy
+  - pip:
+    - advent-of-code-data
