@@ -1,10 +1,7 @@
-import os
+import aocd
 import re
 import numpy as np
 from functools import reduce, cache
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "7.dat")
 
 def check_token_type(token_type, expected):
 
@@ -100,11 +97,11 @@ def evaluate_gates(gates, value):
 def lexer(data):
 
     scanner = re.Scanner([
-        ("\d+", lambda s, t: ("INT", np.ushort(t))),
-        ("(NOT|AND|OR|LSHIFT|RSHIFT)", lambda s, t: ("OP", t)),
-        ("->", lambda s, t: ("ASSIGN", t)),
+        (r"\d+", lambda s, t: ("INT", np.ushort(t))),
+        (r"(NOT|AND|OR|LSHIFT|RSHIFT)", lambda s, t: ("OP", t)),
+        (r"->", lambda s, t: ("ASSIGN", t)),
         (r"\s+", None), # Ignore whitespace
-        ("[a-z]+", lambda s, t: ("ID", t))
+        (r"[a-z]+", lambda s, t: ("ID", t))
     ])
     tokens, remainder = scanner.scan(data)
 
@@ -113,14 +110,13 @@ def lexer(data):
 
     return tokens
 
-def parse_input(input_file):
+def parse_input(input):
 
-    with open(input_file, "r") as f:
-        return eval_tokens(lexer(f.read()))
+    return eval_tokens(lexer(input))
 
 if __name__ == "__main__":
 
-    gates = parse_input(INPUT_FILE)
+    gates = parse_input(aocd.get_data(year = 2015, day = 7))
     P1 = gates["a"](gates)
     print(P1)
 

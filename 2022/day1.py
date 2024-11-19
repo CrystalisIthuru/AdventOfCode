@@ -1,23 +1,19 @@
-import os
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE_1 = os.path.join(INPUT_DIRECTORY, "1-1.dat")
+import aocd
 
 if __name__ == "__main__":
 
     elves = []
-    with open(INPUT_FILE_1, "r") as f:
+    current_calories = 0
+    for line in aocd.get_data(day = 1, year = 2022).split("\n"):
+        line = line.strip()
+        
+        if len(line) == 0:
+            elves += [current_calories]
+            current_calories = 0
+        else:
+            current_calories += int(line)
 
-        current_calories = 0
-        for line in f:
-            line = line.strip()
-            
-            if len(line) == 0:
-                elves += [current_calories]
-                current_calories = 0
-            else:
-                current_calories += int(line)
-
-        elves += [current_calories]
+    elves += [current_calories]
 
     elves = sorted(zip(range(len(elves)), elves) , key = lambda x: x[1])
     print(elves[-1][1])

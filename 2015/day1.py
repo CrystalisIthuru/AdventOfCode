@@ -1,12 +1,5 @@
+import aocd
 import os
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "1.dat")
-
-def parse_input(input_file):
-    
-    with open(input_file, "r") as f:
-        return f.read().strip()
     
 def run_elevator(source):
     
@@ -32,6 +25,6 @@ def first_basement(input):
 
 if __name__ == "__main__":
     
-    input = parse_input(INPUT_FILE)
+    input = aocd.get_data(day = 1, year = 2015)
     print(run_elevator(input))
     print(first_basement(input))

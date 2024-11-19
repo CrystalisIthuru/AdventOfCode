@@ -1,3 +1,4 @@
+import aocd
 import numpy as np
 
 def countIncreasingMeasurements(measurements):
@@ -13,15 +14,14 @@ def countIncreasingMeasurementsSlideingWindow(measurements, window):
 def parseInput(input):
 
     measurements = []
-    with open(input, "r") as f:
-        for line in f:
-            measurements += [int(line)]
+    for line in input.split("\n"):
+        measurements += [int(line)]
     
     return np.array(measurements)
 
 if __name__ == "__main__":
 
-    measurements = parseInput("inputs/1.dat")
+    measurements = parseInput(aocd.get_data(year = 2021, day = 1))
 
     # Part 1
     print(countIncreasingMeasurements(measurements))

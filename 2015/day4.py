@@ -1,3 +1,4 @@
+import aocd
 import hashlib
 
 def find_secret_key_hash(secret_key, required_zeros = 5):
@@ -14,7 +15,7 @@ def find_secret_key_hash(secret_key, required_zeros = 5):
     
 if __name__ == "__main__":
     
-    secret_key = "iwrupvqb"
+    secret_key = aocd.get_data(day = 4, year = 2015)
     print(find_secret_key_hash(secret_key))
     print(find_secret_key_hash(secret_key, 6))
     

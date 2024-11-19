@@ -1,21 +1,18 @@
+import aocd
 import functools
-import os
 import re
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "6.dat")
+def parse_input_pt1(input):
 
-def parse_input_pt1(input_file):
-
-    with open(input_file, "r") as f:
-        times = [int(n) for n in re.findall(r"\d+", f.readline())]
-        distances = [int(n) for n in re.findall(r"\d+", f.readline())]
+    lines = input.split("\n")
+    times = [int(n) for n in re.findall(r"\d+", lines.pop(0))]
+    distances = [int(n) for n in re.findall(r"\d+", lines.pop(0))]
 
     return times, distances
 
-def parse_input_pt2(input_file):
+def parse_input_pt2(input):
 
-    times, distance = parse_input_pt1(input_file)
+    times, distance = parse_input_pt1(input)
 
     time = int(functools.reduce(lambda acc, x: acc + str(x), times, ""))
     distance = int(functools.reduce(lambda acc, x: acc + str(x), distance, ""))
@@ -35,10 +32,10 @@ def record_combo(time, distance):
 
 if __name__ == "__main__":
 
-    times, distances = parse_input_pt1(INPUT_FILE)
+    times, distances = parse_input_pt1(aocd.get_data(day = 6, year = 2023))
 
     beat_record_combos = [record_combo(time, distance) for time, distance in zip(times, distances)]
     print(functools.reduce(lambda acc, x: acc * x, beat_record_combos, 1))
 
-    time, distance = parse_input_pt2(INPUT_FILE)
+    time, distance = parse_input_pt2(aocd.get_data(day = 6, year = 2023))
     print(record_combo(time, distance))

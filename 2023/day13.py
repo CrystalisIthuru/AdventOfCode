@@ -1,22 +1,18 @@
 from functools import reduce, cache
+import aocd
 import numpy as np
-import os
 import re
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "13.dat")
-
-def parse_input(input_file):
+def parse_input(input):
 
     mirrors = []
     mirror_lines = []
-    with open(input_file, "r") as f:
-        for line in f:
-            if line == "\n":
-                mirrors += ["\n".join(mirror_lines)]
-                mirror_lines = []
-            else:
-                mirror_lines += [line.strip()]
+    for line in input.split("\n"):
+        if line == "":
+            mirrors += ["\n".join(mirror_lines)]
+            mirror_lines = []
+        else:
+            mirror_lines += [line.strip()]
 
     if mirror_lines:
         mirrors += ["\n".join(mirror_lines)]
@@ -86,7 +82,7 @@ def is_reflection(mirror, orientation, starting_index):
 
 if __name__ == "__main__":
 
-    mirrors = parse_input(INPUT_FILE)
+    mirrors = parse_input(aocd.get_data(day = 13, year = 2023))
 
     print(reduce(lambda acc, result: acc + (100 * result[1] if result[0] == "row" else result[1]), map(find_reflection, mirrors), 0))
     print(reduce(lambda acc, result: acc + (100 * result[1] if result[0] == "row" else result[1]), map(find_reflection_smudge, mirrors), 0))

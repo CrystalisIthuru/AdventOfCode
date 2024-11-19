@@ -1,13 +1,5 @@
-import os
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "3.dat")
-
-def parse_input(input_file):
-    
-    with open(input_file, "r") as f:
-        return f.read().strip()
-    
+import aocd
+ 
 def move_direction(location, direction):
     
     x, y = location
@@ -49,7 +41,7 @@ def move_direction_robo(directions):
 
 if __name__ == "__main__":
     
-    directions = parse_input(INPUT_FILE)
+    directions = aocd.get_data(day = 3, year = 2015)
     print(len(move_directions(directions)))
     #directions = "^v^v^v^v^v"
     print(len(move_direction_robo(directions)))

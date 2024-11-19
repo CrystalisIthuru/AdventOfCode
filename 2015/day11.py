@@ -1,3 +1,4 @@
+import aocd
 
 def generate_new_password(password):
 
@@ -64,5 +65,7 @@ def is_valid_password(password):
 
 if __name__ == "__main__":
 
-    print(generate_new_password("hxbxwxba"))
-    print(generate_new_password(generate_new_password("hxbxwxba")))
+    input = aocd.get_data(day = 11, year = 2015)
+
+    print(generate_new_password(input))
+    print(generate_new_password(generate_new_password(input)))

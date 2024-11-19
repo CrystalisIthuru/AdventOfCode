@@ -1,10 +1,7 @@
+import aocd
 import collections
 import functools
-import os
 import re
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "5.dat")
 
 class ClosedInterval:
 
@@ -84,10 +81,7 @@ class AlmanacMap:
         return source_interval, destination_interval
 
 
-def parse_input(input_file):
-
-    with open(input_file, "r") as f:
-        data = f.read()
+def parse_input(input):
 
     scanner = re.Scanner([
         (r"seeds: (?:\d+\s*)+", lambda scanner, match: ("SEEDS_DATA", match.strip())),
@@ -96,7 +90,7 @@ def parse_input(input_file):
         (r"\s*", None)
     ])
 
-    tokens, _ = scanner.scan(data)
+    tokens, _ = scanner.scan(input)
 
     seed_token_type, seed_data = tokens.pop(0)
     seeds = [int(n) for n in re.findall("\d+", seed_data)]
@@ -165,7 +159,7 @@ def map_interval(interval, almanac_maps):
 
 if __name__ == "__main__":
 
-    seeds, almanac_maps = parse_input(INPUT_FILE)
+    seeds, almanac_maps = parse_input(aocd.get_data(day = 5, year = 2023))
 
     print(min([evaluate_seed(seed, almanac_maps) for seed in seeds]))
 

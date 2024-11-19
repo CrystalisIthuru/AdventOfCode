@@ -1,7 +1,4 @@
-import os
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "5.dat")
+import aocd
 
 def is_nice(str):
     
@@ -43,13 +40,12 @@ def is_vowel(char):
 
     return char in "aeiou"
 
-def parse_input(input_file):
+def parse_input(input):
     
-    with open(input_file, "r") as f:
-        return list(map(lambda x: x.strip(), f.readlines()))
+        return list(map(lambda x: x.strip(), input.split("\n")))
 
 if __name__ == "__main__":
     
-    strings = parse_input(INPUT_FILE)
+    strings = parse_input(aocd.get_data(day = 5, year = 2015))
     print(sum(map(lambda x: is_nice(x), strings)))
     print(sum(map(lambda x: is_nice2(x), strings)))

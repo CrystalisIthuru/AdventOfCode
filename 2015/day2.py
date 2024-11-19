@@ -1,15 +1,12 @@
-import os
+import aocd
 import re
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "2.dat")
+def parse_input():
 
-def parse_input(input_file):
-    
+    input = aocd.get_data(day = 2, year = 2015)    
     dimensions = []
-    with open(input_file, "r") as f:
-        for line in f:
-            dimensions += [tuple(map(lambda x: int(x), re.findall(r"\d+", line)))]
+    for line in [line.strip() for line in input.split("\n")]:
+        dimensions += [tuple(map(lambda x: int(x), re.findall(r"\d+", line)))]
             
     return dimensions
 
@@ -41,6 +38,6 @@ def total_ribbon(dimensions):
 
 if __name__ == "__main__":
     
-    dimensions = parse_input(INPUT_FILE)
+    dimensions = parse_input()
     print(total_wrapping_paper(dimensions))
     print(total_ribbon(dimensions))

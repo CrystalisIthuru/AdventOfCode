@@ -1,14 +1,10 @@
 from functools import reduce
 import numpy as np
-import os
+import aocd
 import re
 import sys
 
 sys.setrecursionlimit(1000000)
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "18.dat")
-
 
 def build_vertices(instructions):
 
@@ -32,23 +28,22 @@ def move_vertex (vertex, direction, length):
     elif direction == "D":
         return (i + length, j)
     else:
-        raise Exception(f"Unknown direction '{directions}'")
+        raise Exception(f"Unknown direction '{direction}'")
 
-def parse_input(input_file):
+def parse_input(input):
 
     instructions = []
 
-    with open(input_file, "r") as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                match = re.match(r"(R|D|L|U) (\d+) \(#([A-Za-z0-9]{6})\)", line)
+    for line in input.split("\n"):
+        line = line.strip()
+        if line:
+            match = re.match(r"(R|D|L|U) (\d+) \(#([A-Za-z0-9]{6})\)", line)
 
-                direction = match.group(1)
-                length = int(match.group(2))
-                color = match.group(3)
+            direction = match.group(1)
+            length = int(match.group(2))
+            color = match.group(3)
 
-                instructions += [(direction, length, color)]
+            instructions += [(direction, length, color)]
 
     return instructions
 
@@ -119,7 +114,7 @@ def convert_instructions(instructions):
 
 if __name__ == "__main__":
 
-    instructions = parse_input(INPUT_FILE)
+    instructions = parse_input(aocd.get_data(day = 18, year = 2023))
     vertices = translate_vertices(build_vertices(instructions))
     print(count_lava(vertices))
 

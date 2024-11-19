@@ -1,8 +1,5 @@
-import os
+import aocd
 import re
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "4.dat")
 
 def score_scratchcard(card):
 
@@ -58,9 +55,8 @@ def score_scratchcard_expanded(cards):
     #return card_count
 
 if __name__ == "__main__":
-
-    with open(INPUT_FILE, "r") as f:
-        cards = f.readlines()
+    
+    cards = aocd.get_data(day = 4, year = 2023).split("\n")
 
     print(sum([score_scratchcard(card) for card in cards]))
     print(score_scratchcard_expanded(cards))

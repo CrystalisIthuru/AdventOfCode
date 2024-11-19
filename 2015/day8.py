@@ -1,15 +1,11 @@
-import os
+import aocd
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "8.dat")
-
-def parse_input(input_file):
+def parse_input(input):
 
     strings = []
-    with open(input_file, "r") as f:
-        for line in f:
-            line = line.strip()
-            strings += [(line, eval(line))]
+    for line in input.split("\n"):
+        line = line.strip()
+        strings += [(line, eval(line))]
     
     return strings
 
@@ -19,6 +15,6 @@ def encoded_length(string):
 
 if __name__ == "__main__":
 
-    strings = parse_input(INPUT_FILE)
+    strings = parse_input(aocd.get_data(day = 8, year = 2015))
     print(sum(map(lambda string: len(string[0]) - len(string[1]), strings)))
     print(sum(map(lambda string: encoded_length(string[0]) - len(string[0]), strings)))

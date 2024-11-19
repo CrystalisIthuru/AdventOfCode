@@ -1,9 +1,6 @@
-import os
+import aocd
 import re
 from collections import OrderedDict
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "15.dat")
 
 def HASH(str):
 
@@ -15,12 +12,11 @@ def HASH(str):
 
     return current_value
 
-def parse_input(input_file):
+def parse_input(input):
 
     instructions = []
-    with open(input_file, "r") as f:
-        for line in f:
-            instructions += line.split(",")
+    for line in input.split("\n"):
+        instructions += line.split(",")
 
     return instructions
 
@@ -69,6 +65,6 @@ def arange_lenses(instructions):
 
 if __name__ == "__main__":
 
-    instructions = parse_input(INPUT_FILE)
+    instructions = parse_input(aocd.get_data(day = 15, year = 2023))
     print(sum(map(HASH, instructions)))
     print(arange_lenses(instructions))

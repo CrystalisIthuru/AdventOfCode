@@ -1,12 +1,9 @@
-import os
+import aocd
 import numpy as np
 import re
 import sys
 
 sys.setrecursionlimit(1000000)
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "10.dat")
 
 class GraphNode:
 
@@ -21,11 +18,9 @@ class GraphNode:
 
         return self.pipe
 
-def parse_input(input_file):
+def parse_input(input):
 
-    with open(input_file, "r") as f:
-        lines = [line.strip() for line in f.readlines()]
-
+    lines = [line.strip() for line in input.split("\n")]
     pipes = np.array([re.split(r"", line.strip())[1:-1] for line in lines if len(line) != 0])
     return pipes
 
@@ -213,7 +208,7 @@ def flood_fill_recur(filled, position):
 
 if __name__ == "__main__":
 
-    pipes = parse_input(INPUT_FILE)
+    pipes = parse_input(aocd.get_data(day = 10, year = 2023))
 
     pipes, indices = expand_pipes(pipes)
     graph = create_graph(pipes)

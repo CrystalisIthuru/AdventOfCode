@@ -1,15 +1,9 @@
-import os
+import aocd
 import numpy as np
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "3.dat")
+def parse_input(input):
 
-def parse_input(input_file):
-
-    with open(input_file, "r") as f:
-        data = f.read()
-
-    lines = data.split()
+    lines = input.split()
     input = np.zeros((len(lines), len(lines[0])), dtype = str)
 
     for i, line in enumerate(lines):
@@ -94,7 +88,7 @@ def find_gear_ratios(input):
 
 if __name__ == "__main__":
 
-    input = parse_input(INPUT_FILE)
+    input = parse_input(aocd.get_data(day = 3, year = 2023))
     part_numbers = find_part_numbers(input)
     print(sum(part_numbers))
 

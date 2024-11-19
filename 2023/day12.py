@@ -1,24 +1,20 @@
 from functools import reduce, cache
+import aocd
 import numpy as np
-import os
 import re
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "12.dat")
-
-def parse_input(input_file, unfold = 1):
+def parse_input(input, unfold = 1):
 
     nonograms = []
 
-    with open(input_file, "r") as f:
-        for line in f:
-            if line.strip() == "": continue
-            match = re.match(r"([\?\.#]+)\s((?:\d+,?)+)", line)
+    for line in input.split("\n"):
+        if line.strip() == "": continue
+        match = re.match(r"([\?\.#]+)\s((?:\d+,?)+)", line)
 
-            nonogram = "?".join([match.group(1)] * unfold)
-            clues = ",".join([match.group(2)] * unfold)
+        nonogram = "?".join([match.group(1)] * unfold)
+        clues = ",".join([match.group(2)] * unfold)
 
-            nonograms += [(nonogram, clues)]
+        nonograms += [(nonogram, clues)]
 
     return nonograms
 
@@ -63,8 +59,8 @@ def count_nonogram_solutions(nonogram, clues):
 
 if __name__ == "__main__":
 
-    part1_nonograms = parse_input(INPUT_FILE)
-    part2_nonograms = parse_input(INPUT_FILE, 5)
+    part1_nonograms = parse_input(aocd.get_data(day = 12, year = 2023))
+    part2_nonograms = parse_input(aocd.get_data(day = 12, year = 2023), 5)
 
     print(reduce(lambda acc, x: acc + count_nonogram_solutions(*x), part1_nonograms, 0))
     print(reduce(lambda acc, x: acc + count_nonogram_solutions(*x), part2_nonograms, 0))

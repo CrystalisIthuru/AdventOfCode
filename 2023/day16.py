@@ -1,14 +1,10 @@
-import os
+import aocd
 import numpy as np
 from copy import deepcopy
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "16.dat")
+def parse_input(input):
 
-def parse_input(input_file):
-
-    with open(input_file, "r") as f:
-        return np.array([[char for char in line.strip()] for line in f if len(line.strip()) > 0])
+    return np.array([[char for char in line.strip()] for line in input.split("\n") if len(line.strip()) > 0])
     
 def get_next_beam_location(location, direction):
 
@@ -98,6 +94,6 @@ def count_best_energized_tiles(contraption):
 
 if __name__ == "__main__":
 
-    contraption = parse_input(INPUT_FILE)
+    contraption = parse_input(aocd.get_data(day = 16, year = 2023))
     print(count_energized_tiles(contraption, (0, 0), "right"))
     print(count_best_energized_tiles(contraption))

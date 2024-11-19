@@ -1,17 +1,13 @@
+import aocd
 import numpy as np
-import os
 import re
 
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "9.dat")
-
-def parse_input(input_file):
+def parse_input(input):
 
     sequences = []
-    with open(input_file, "r") as f:
-        for line in f:
-            if line.strip() == "": continue
-            sequences += [np.array([int(n) for n in re.findall(r"-?\d+", line)])]
+    for line in input.split("\n"):
+        if line.strip() == "": continue
+        sequences += [np.array([int(n) for n in re.findall(r"-?\d+", line)])]
 
     return sequences
 
@@ -47,7 +43,7 @@ def find_previous_element(sequence):
 
 if __name__ == "__main__":
 
-    sequences = parse_input(INPUT_FILE)
+    sequences = parse_input(aocd.get_data(day = 9, year = 2023))
 
     print(sum([find_next_element(S) for S in sequences]))
     print(sum([find_previous_element(S) for S in sequences]))

@@ -1,10 +1,7 @@
+import aocd
 import numpy as np
-import os
 import re
 import copy
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "9.dat")
 
 class GraphNode:
 
@@ -43,18 +40,17 @@ def create_graph(distances):
 
     return nodes
 
-def parse_input(input_file):
+def parse_input(input):
 
     distances = []
-    with open(input_file, "r") as f:
-        for line in f:
-            match = re.match(r"([a-zA-Z]+) to ([a-zA-Z]+) = (\d+)", line)
+    for line in input.split("\n"):
+        match = re.match(r"([a-zA-Z]+) to ([a-zA-Z]+) = (\d+)", line)
 
-            distances += [(
-                match.group(1),     # Start location
-                match.group(2),     # End location
-                int(match.group(3)) # Distance
-            )]
+        distances += [(
+            match.group(1),     # Start location
+            match.group(2),     # End location
+            int(match.group(3)) # Distance
+        )]
 
     return distances
 
@@ -94,7 +90,7 @@ def traveling_salesman(graph):
 
 if __name__ == "__main__":
 
-    distances = parse_input(INPUT_FILE)
+    distances = parse_input(aocd.get_data(day = 9, year = 2015))
     graph = create_graph(distances)
     distances = list(map(lambda x: x[1], traveling_salesman(graph)))
     print(min(distances))

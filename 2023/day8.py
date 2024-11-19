@@ -1,11 +1,8 @@
 from functools import reduce
+import aocd
 import math
 import multiprocessing as mp
-import os
 import re
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "8.dat")
 
 class GraphNode:
 
@@ -19,23 +16,23 @@ class GraphNode:
 
         return f"{self.label} = ({self.left}, {self.right})"
 
-def parse_input(input_file):
+def parse_input(input):
 
-    with open(input_file, "r") as f:
+    lines = input.split("\n")
 
-        instructions = f.readline().strip()
-        f.readline() # Skip a line
+    instructions = lines[0].strip()
+    lines = lines[2:] # Skip first two lines
 
-        nodes = {}
+    nodes = {}
 
-        for line in f:
-            match = re.match(r"(.{3}) = \((.{3})\, (.{3})\)", line)
-            
-            label = match.group(1)
-            left = match.group(2)
-            right = match.group(3)
+    for line in lines:
+        match = re.match(r"(.{3}) = \((.{3})\, (.{3})\)", line)
+        
+        label = match.group(1)
+        left = match.group(2)
+        right = match.group(3)
 
-            nodes[label] = GraphNode(label, left, right)
+        nodes[label] = GraphNode(label, left, right)
 
     return instructions, nodes
 
@@ -89,7 +86,7 @@ def find_starting_nodes(nodes, starting_char):
 
 if __name__ == "__main__":
 
-    instructions, nodes = parse_input(INPUT_FILE)
+    instructions, nodes = parse_input(aocd.get_data(day = 8, year = 2023))
 
     print(evaluate_instructions(instructions, nodes, "AAA", "ZZZ"))
     print(evaluate_instructions_ghost(instructions, nodes, "A", "Z"))

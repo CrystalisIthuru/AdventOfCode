@@ -1,9 +1,6 @@
+import aocd
 import re
-import os
 import functools
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "2.dat")
 
 scanner = re.Scanner([
     (r"Game \d+:", lambda s, t: ("GAME", int(re.search(r"(\d+)", t).group(1)))),
@@ -28,33 +25,32 @@ COLOR_TOTALS = {
 
 possible_games = []
 all_color_minimums = []
-with open(INPUT_FILE, "r") as f:
-    for line in f:
-        line = line.strip()
-        if len(line) == 0: continue
+for line in aocd.get_data(day = 2, year = 2023).split("\n"):
+    line = line.strip()
+    if len(line) == 0: continue
 
-        tokens, _ = scanner.scan(line)
-        _, game_id = tokens[0]
+    tokens, _ = scanner.scan(line)
+    _, game_id = tokens[0]
 
-        color_minimums = {
-            "RED" : 0,
-            "GREEN" : 0,
-            "BLUE" : 0
-        }
+    color_minimums = {
+        "RED" : 0,
+        "GREEN" : 0,
+        "BLUE" : 0
+    }
 
-        possible_game = True
+    possible_game = True
 
-        for token_type, token_value in tokens[1:]:
-            if token_type == "ROUND-END": continue
+    for token_type, token_value in tokens[1:]:
+        if token_type == "ROUND-END": continue
 
-            if color_minimums[token_type] < token_value:
-                color_minimums[token_type] = token_value
+        if color_minimums[token_type] < token_value:
+            color_minimums[token_type] = token_value
 
-            if token_value > COLOR_TOTALS[token_type]:
-                possible_game = False
+        if token_value > COLOR_TOTALS[token_type]:
+            possible_game = False
 
-        all_color_minimums += [color_minimums] 
-        if possible_game: possible_games += [game_id]
+    all_color_minimums += [color_minimums] 
+    if possible_game: possible_games += [game_id]
 
 
 print(possible_games)

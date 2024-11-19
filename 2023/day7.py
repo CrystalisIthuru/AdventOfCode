@@ -1,11 +1,8 @@
 from functools import reduce, cmp_to_key
-import os
+import aocd
 import re
 import enum
 import numpy as np
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "7.dat")
 
 class HAND_TYPES(enum.IntEnum):
 
@@ -17,19 +14,17 @@ class HAND_TYPES(enum.IntEnum):
     ONE = 0,
     HIGH = -1
 
-def parse_input(input_file):
+def parse_input(input):
 
     hands = []
     bids = []
-    with open(input_file, "r") as f:
+    for line in input.split("\n"):
 
-        for line in f:
+        if line.strip() == "": continue
 
-            if line.strip() == "": continue
-
-            hand, bid = [el for el in re.split(r"\s+", line) if len(el) != 0]
-            hands += [hand]
-            bids += [int(bid)]
+        hand, bid = [el for el in re.split(r"\s+", line) if len(el) != 0]
+        hands += [hand]
+        bids += [int(bid)]
 
     return hands, bids
 
@@ -141,7 +136,7 @@ def calculate_winnings(hands, bids, use_jokers = False):
 
 if __name__ == "__main__":
 
-    hands, bids = parse_input(INPUT_FILE)
+    hands, bids = parse_input(aocd.get_data(day = 7, year = 2023))
     print(calculate_winnings(hands, bids))
     print(calculate_winnings(hands, bids, use_jokers = True))
 

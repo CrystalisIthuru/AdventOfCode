@@ -1,10 +1,7 @@
 from functools import reduce
+import aocd
 import numpy as np
-import os
 import re
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "11.dat")
 
 def expand_universe(universe):
 
@@ -49,16 +46,14 @@ def manhattan_distance(left, right, expanded_rows = [], expanded_cols = [], expa
 
     return distance
 
-def parse_input(input_file):
+def parse_input(input):
 
-    with open(input_file, "r") as f:
-        lines = f.readlines()
-
+    lines = input.split("\n")
     return np.array([re.split("", line.strip())[1:-1] for line in lines])
 
 if __name__ == "__main__":
 
-    universe = parse_input(INPUT_FILE)
+    universe = parse_input(aocd.get_data(day = 11, year = 2023))
 
     expanded_rows, expanded_cols = expand_universe(universe)
     galaxy_pairs = find_galaxy_pairs(universe)

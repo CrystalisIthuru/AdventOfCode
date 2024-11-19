@@ -1,9 +1,6 @@
+import aocd
 import numpy as np
-import os
 import re
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "6.dat")
 
 def turn_on_lights(instructions):
     
@@ -43,28 +40,27 @@ def increase_brightness(instructions):
 
     return int(np.sum(lights))
             
-def parse_input(input_file):
+def parse_input(input):
     
     instructions = []
-    with open(input_file, "r") as f:
-        for line in f:
-            match = re.match("(toggle|turn (on|off)) (\d+),(\d+) through (\d+),(\d+)", line)
-            
-            if "turn" in match.group(1):
-                value = match.group(2)
-            else:
-                value = match.group(1)
-            
-            top_left = int(match.group(3)), int(match.group(4))
-            bot_right = int(match.group(5)), int(match.group(6))
-            
-            instructions += [(value, top_left, bot_right)]
+    for line in input.split("\n"):
+        match = re.match(r"(toggle|turn (on|off)) (\d+),(\d+) through (\d+),(\d+)", line)
+        
+        if "turn" in match.group(1):
+            value = match.group(2)
+        else:
+            value = match.group(1)
+        
+        top_left = int(match.group(3)), int(match.group(4))
+        bot_right = int(match.group(5)), int(match.group(6))
+        
+        instructions += [(value, top_left, bot_right)]
             
     return instructions
 
 if __name__ == "__main__":
     
-    instructions = parse_input(INPUT_FILE)
+    instructions = parse_input(aocd.get_data(day = 6, year = 2015))
     print(np.sum(turn_on_lights(instructions)))
     #instructions = [("toggle", (0, 0), (999, 999))]
     print(increase_brightness(instructions))

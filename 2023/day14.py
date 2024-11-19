@@ -1,16 +1,6 @@
-import os
+import aocd
 import numpy as np
 from functools import cache
-
-INPUT_DIRECTORY = os.path.join(os.path.dirname(__file__), "inputs")
-INPUT_FILE = os.path.join(INPUT_DIRECTORY, "14.dat")
-
-def parse_input(input_file):
-
-    with open(input_file, "r") as f:
-        data = f.read()
-
-    return data
 
 def find_tilt_distance(dish, rock_location):
 
@@ -86,8 +76,8 @@ if __name__ == "__main__":
 
     # Not my best work. Slow. Probably all the turning string to array and back
 
-    dish = parse_input(INPUT_FILE)
+    dish = aocd.get_data(day = 14, year = 2023)
     print(calculate_total_load(tilt(dish)))
     
-    dish = parse_input(INPUT_FILE)    
+    dish = aocd.get_data(day = 14, year = 2023)
     print(spin_cycle(dish, 1000000000))

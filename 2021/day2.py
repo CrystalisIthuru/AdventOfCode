@@ -1,13 +1,13 @@
+import aocd
 import re
 import numpy as np
 
 def parseInput(input):
 
     commands = []
-    with open(input, "r") as f:
-        for line in f:
-            direction, distance = re.split(r"\s+", line.strip())
-            commands += [(direction, int(distance))]
+    for line in input.split("\n"):
+        direction, distance = re.split(r"\s+", line.strip())
+        commands += [(direction, int(distance))]
     
     return commands
 
@@ -49,7 +49,7 @@ def run_commands_pt2(commands, start = (0, 0, 0)):
 
 if __name__ == "__main__":
 
-    commands = parseInput("inputs/2.dat")
+    commands = parseInput(aocd.get_data(day = 2, year = 2021))
 
     # Part 1
     print(np.prod(run_commands(commands)))
