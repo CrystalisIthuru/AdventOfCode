@@ -19,6 +19,11 @@ RUN wget -c https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.s
     /root/miniconda3/condabin/conda init bash && \
     /root/miniconda3/condabin/conda env create -y -f environment.yml && \
     /root/miniconda3/condabin/conda clean --all -y
+    
+# Install Racket
+RUN wget -c https://download.racket-lang.org/installers/8.15/racket-8.15-x86_64-linux-cs.sh && \
+    bash racket-8.15-x86_64-linux-cs.sh --dest /usr/ --unix-style && \
+    rm -f racket-8.15-x86_64-linux-cs.sh
 
 # Setup Advent of Code Session Token
 COPY AOC_SESSION /root/.config/aocd/token
