@@ -1,5 +1,6 @@
 name: adventofcode
 dependencies:
   - numpy
+  - pillow
   - pip:
     - advent-of-code-data
